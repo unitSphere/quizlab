@@ -16,6 +16,6 @@
 2. In /backend execute `node app.js`
 3.  Test the app through the port that you will be redirected to by backend (e.g. localhost:5000)
 
-### Latest data structure can be found at:
+### Latest data structures can be found at:
 
 https://docs.google.com/document/d/1G5C47jNg8QfjJGCW016F-I5mKgTQQ01qr8TMGWVMVy4/edit?usp=sharing
