@@ -1,0 +1,8 @@
+{
+  "mongo": {
+    "user": "dbuser",
+    "password": "dbuser"
+  },
+  "api_key": "5dc8511c30db441c823a5382cacb395f"
+}
+
