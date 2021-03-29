@@ -4,7 +4,7 @@
 
 0. Install dependencies by `npm install` (Both in /backend and /frontend directories)
 1. `node app.js` keep this running (execute in /backend)
-2. `cd ./frondend`
+2. `cd ./frontend`
 3. `npm start` keep this running (execute in ./frontend)
 4. Test the app through the port that you will be redirected to by frontend (i.g. localhost:3000)
 
