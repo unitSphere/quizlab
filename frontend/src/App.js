@@ -17,6 +17,7 @@ import LoginPage from "./pages/login";
 import MainPage from "./pages/main";
 import QuizzesPage from "./pages/quizzes";
 import ClassesPage from "./pages/classes";
+import StudentMainPage from "./pages/studentMain";
 
 class App extends Component {
   state = {};
@@ -100,6 +101,9 @@ class App extends Component {
           <Route path="/about">
             <AboutPage isauth={this.state.isauth} user={this.state.user} />
           </Route>
+            <Route path="/student">
+                <StudentMainPage isauth={this.state.isauth} user={this.state.user} />
+            </Route>
           <Route path="/error">
             <ErrorPage />
           </Route>

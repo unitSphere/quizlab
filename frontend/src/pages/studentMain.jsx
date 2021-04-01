@@ -5,15 +5,16 @@ import "../style/home.css";
 import ClassesTable from "../components/classes/classesTable";
 import Button from "@material-ui/core/Button";
 import AddClassDialog from "../components/classes/addClassDialog";
+import QuizTable from "../components/studentMain/quizTable";
 
 
 
 
-export default function ClassesPage(props) {
+export default function StudentMainPage(props) {
 
     return (
         <div>
-            <ClassesTable newClass/>
+            <QuizTable newClass/>
         </div>
     );
 }

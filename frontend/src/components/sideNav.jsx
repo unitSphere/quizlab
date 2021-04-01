@@ -19,6 +19,9 @@ class SideNavigation extends Component {
         <Link className="menu_item" to="/about">
           About
         </Link>
+      <Link className="menu_item" to="/student">
+          Student
+      </Link>
       </div>
     );
   }
