@@ -120,7 +120,7 @@ class NavigationBar extends Component {
 
   signOut() {
     axios
-      .post("/api/user/signout")
+      .post("/api/user/logout")
       .then(response => {
         if (response.status === 200) {
           document.location.href = "/";

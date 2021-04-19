@@ -2,7 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const {find_student_by_email, get_students, add_student, get_students_by_ids} = require("../dataAccess/studentsData");
+const {find_student_by_email, get_students, add_student, get_students_by_ids} = require("../dataAccess/usersData");
 
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));

@@ -61,7 +61,7 @@ class LoginPage extends Component {
   signup(event) {
     this.setState({ loading: true });
     axios
-      .post("/api/user/signin", {
+      .post("/api/user/login", {
         username: this.state.username,
         password: this.state.password
       })
@@ -80,6 +80,7 @@ class LoginPage extends Component {
       });
     event.preventDefault();
   }
+
   render() {
     const { classes } = this.props;
     return (
@@ -104,7 +105,7 @@ class LoginPage extends Component {
                     fullWidth
                     id="username"
                     onChange={this.handleChange}
-                    label="Username"
+                    label="Email"
                   />
                 </Grid>
                 <Grid item xs={12}>

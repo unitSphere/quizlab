@@ -1,29 +1,42 @@
 const executeQuery = require('../utilities/mongoConnect').executeQuery;
 const db = "Quizlab";
-const users_collection = "users";
+let ObjectId = require('mongodb').ObjectID;
+const students_collection = "students";
+const teachers_collection = "teachers";
 
-
-exports.add_user = async (username, email, password, salt) => {
-    return await executeQuery(db, async (db) => await db.collection(users_collection).insertOne(
-        {username: username, email: email, password: password, salt: salt}));
+exports.add_student = async (name, email, password) => {
+    return await executeQuery(db, async (db) => await db.collection(students_collection).insertOne(
+        {fullName: name, email: email, password: password}));
 };
 
-exports.user_signin = async (username, password) => {
-    return await executeQuery(db, async (db) => await db.collection(users_collection).findOne(
-        {username: username, password: password}));
+exports.get_students = async () => {
+    return await executeQuery(db, async (db) => await db.collection(students_collection).find({}).toArray());
 };
 
-exports.find_user_by_email = async (email) => {
-    return await executeQuery(db, async (db) => await db.collection(users_collection).findOne(
+exports.find_student_by_email = async (email) => {
+    return await executeQuery(db, async (db) => await db.collection(students_collection).findOne(
         {email: email}));
 };
 
-exports.get_users = async () => {
-    return await executeQuery(db, async (db) => await db.collection(users_collection).find(
-        {}).toArray());
+exports.get_students_by_ids = async (student_ids) => {
+    student_ids.forEach((id, index, student_ids) => student_ids[index] = ObjectId(id));
+    console.log(student_ids);
+    return await executeQuery(db, async (db) => await db.collection(collection).find({"_id" : {"$in" : student_ids}}).toArray())
+}
+
+exports.add_teacher = async (username, email, password) => {
+    return await executeQuery(db, async (db) => await db.collection(teachers_collection).insertOne(
+        {username: username, email: email, password: password}));
 };
 
-exports.find_user_by_username = async (username) => {
-    return await executeQuery(db, async (db) => await db.collection(users_collection).findOne(
-        {username: username}));
+exports.find_teacher_by_email = async (email) => {
+    return await executeQuery(db, async (db) => await db.collection(teachers_collection).findOne(
+        {email: email}));
 };
+
+exports.find_teacher_by_id = async (id) => {
+    const _id = ObjectId(id);
+    return await executeQuery(db, async (db) => await db.collection(teachers_collection).findOne(
+        {_id: _id}));
+};
+

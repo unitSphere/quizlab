@@ -31,14 +31,15 @@ class App extends Component {
     axios
       .get("/api/user/isauthenticated")
       .then(response => {
-        //console.log(response);
+        console.log(response);
         if (
           this.state.isauth !== response.data.isauth ||
           this.state.user !== response.data.username
         ) {
           this.setState({
             isauth: response.data.isauth,
-            user: response.data.username
+            user: response.data.username,
+              userType: response.data.type
           });
         }
       })
@@ -50,12 +51,7 @@ class App extends Component {
   componentDidMount() {
     this.checkAuth();
   }
-  /**
-   * <div class='flex'>
-   *  <div>chart</div>
-   * <div></div>
-   * </div>
-   */
+
   render() {
     //if (!this.state.isauth) return <h1>ERROR</h1>;
 

@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -33,6 +38,9 @@ const styles = (theme) => ({
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
+  radio: {
+    marginTop: "10px"
+  },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
@@ -52,56 +60,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function VerificationCodeModal(props) {
-  const { email, username, password } = props;
-  const [token, setToken] = React.useState("");
-  const [errToken, setErrToken] = React.useState(false);
-  const [error, setError] = React.useState("");
-  const classes = useStyles();
-  const handleChangeToken = (event) => {
-    setErrToken(false);
-    setToken(event.target.value);
-  };
-
-  const handleSubmit = () => {
-    document.location.href = "/";
-  };
-
-  return (
-    <div>
-      <div className={classes.main}>
-
-        <div className={classes.info}>
-          Token was sent to <b>{email}</b>
-        </div>
-        <form className={classes.top}>
-          <TextField
-            error={errToken}
-            id="token"
-            label="Token"
-            variant="outlined"
-            value={token}
-            type="text"
-            onChange={handleChangeToken}
-          />
-          {errToken ? <FormHelperText>Field is Required</FormHelperText> : ""}
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<CheckIcon />}
-              className={classes.top}
-              onClick={handleSubmit}
-            >
-              Confirm
-            </Button>
-          </div>
-        </form>
-        <div>{error}</div>
-      </div>
-    </div>
-  );
-}
 
 class SignupPage extends Component {
   state = {};
@@ -112,6 +70,7 @@ class SignupPage extends Component {
       username: "",
       password: "",
       email: "",
+      userType: "student",
       error: "",
       loading: false,
       openvalidator: false,
@@ -131,8 +90,9 @@ class SignupPage extends Component {
     axios
       .post("/api/user/signup", {
         email: this.state.email,
-        username: this.state.username,
+        name: this.state.name,
         password: this.state.password,
+        userType: this.state.userType
       })
       .then((response) => {
         if (response.status === 200) {
@@ -149,6 +109,7 @@ class SignupPage extends Component {
       });
     event.preventDefault();
   }
+
   render() {
     const { classes } = this.props;
     let page = (
@@ -180,13 +141,13 @@ class SignupPage extends Component {
                 <Grid item xs={12}>
                   <TextField
                     autoComplete="fname"
-                    name="username"
+                    name="name"
                     variant="outlined"
                     required
                     fullWidth
-                    id="username"
+                    id="name"
                     onChange={this.handleChange}
-                    label="Username"
+                    label="Full Name"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -203,6 +164,13 @@ class SignupPage extends Component {
                   />
                 </Grid>
               </Grid>
+              <FormControl component="fieldset" className={classes.radio}>
+                <FormLabel component="legend">Account Type</FormLabel>
+                <RadioGroup aria-label="type" name="userType" value={this.state.userType} onChange={this.handleChange}>
+                  <FormControlLabel value="student" control={<Radio />} label="Student" />
+                  <FormControlLabel value="teacher" control={<Radio />} label="Teacher" />
+                </RadioGroup>
+              </FormControl>
               <Button
                 fullWidth
                 variant="contained"

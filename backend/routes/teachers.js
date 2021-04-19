@@ -2,7 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const {find_teacher_by_email, add_teacher} = require("../dataAccess/teachersData");
+const {find_teacher_by_email, add_teacher} = require("../dataAccess/usersData");
 
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));

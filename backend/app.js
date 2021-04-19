@@ -8,7 +8,6 @@ let quizzes = require('./routes/quizzes.js');
 let problems = require('./routes/problems.js');
 let submissions = require('./routes/submissions.js');
 
-
 const PORT = process.env.PORT || 5000;
 const session = require('express-session');
 
@@ -30,35 +29,10 @@ app.use('/api/problem', problems);
 app.use('/api/submission', submissions);
 
 
-
-// //To catch the invalid paths that need redirection
-// app.use('/signup', (req, res) => {
-//     res.redirect('/');
-// });
-// app.use('/login', (req, res) => {
-//     res.redirect('/');
-// });
-// app.use('/dashboard', (req, res) => {
-//     res.redirect('/');
-// });
-// app.use('/profile', (req, res) => {
-//     res.redirect('/');
-// });
-// app.use('/expenses', (req, res) => {
-//     res.redirect('/');
-// });
-// app.use('/investments', (req, res) => {
-//     res.redirect('/');
-// });
-// app.use('/about', (req, res) => {
-//     res.redirect('/');
-// });
-
 // to catch any other path and return 404
 app.use(function (req, res) {
     let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
     res.status(404).send("Sorry can't find that in Quizlab api! The URL is: " + fullUrl);
 });
-
 
 app.listen(PORT, () => console.log('Start listening on port: ' + PORT));
