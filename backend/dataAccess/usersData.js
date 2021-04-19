@@ -24,9 +24,9 @@ exports.get_students_by_ids = async (student_ids) => {
     return await executeQuery(db, async (db) => await db.collection(collection).find({"_id" : {"$in" : student_ids}}).toArray())
 }
 
-exports.add_teacher = async (username, email, password) => {
+exports.add_teacher = async (name, email, password) => {
     return await executeQuery(db, async (db) => await db.collection(teachers_collection).insertOne(
-        {username: username, email: email, password: password}));
+        {fullName: name, email: email, password: password}));
 };
 
 exports.find_teacher_by_email = async (email) => {

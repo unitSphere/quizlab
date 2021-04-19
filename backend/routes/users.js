@@ -28,7 +28,7 @@ router.post(
     validate,
     async function (req, res) {
         console.log("path /api/user/signup/");
-        let username = req.body.username;
+        let username = req.body.name;
         let password = req.body.password;
         let email = req.body.email;
         let userType = req.body.userType;
@@ -48,6 +48,7 @@ router.post(
         }
 
         if (result) {
+            userType === "student" ? req.session.type = "student" : req.session.type = "teacher";
             req.session.username = email;
             res.setHeader(
                 "Set-Cookie",
@@ -101,6 +102,7 @@ router.post(
             if (teacher.password !== password)
                 return res.status(401).json({error: "access denied"});
 
+
             // initialize cookie
             res.setHeader(
                 "Set-Cookie",
@@ -110,6 +112,7 @@ router.post(
                 })
             );
             req.session.type = "teacher";
+
         }
 
         //session

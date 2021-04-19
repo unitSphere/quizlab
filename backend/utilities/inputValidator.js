@@ -5,7 +5,7 @@ exports.applyValidationRules = (endpoint) => {
     switch (endpoint) {
         case '/signup': {
             return [
-                check('fullName').isLength({min: 5}).withMessage("The name should be at least five characters long"),
+                check('name').isLength({min: 5}).withMessage("The name should be at least five characters long"),
                 check('password').isLength({min: 5}).withMessage("Your password should be at least five characters long"),
                 check('email').isEmail().withMessage("Please write a valid email")
             ];
