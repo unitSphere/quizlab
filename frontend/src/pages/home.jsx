@@ -2,9 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import "../style/home.css";
-import img from "../media/fintrack_gal1.png";
-import img2 from "../media/fintrack_gal2.png";
-import img3 from "../media/fintrack_gal3.png";
 
 const useStyles = makeStyles(theme => ({
   fill: {

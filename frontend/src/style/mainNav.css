@@ -78,14 +78,6 @@
   color: rgb(73, 73, 73);
 }
 
-.fintrack_logo {
-  margin-left: 50px;
-  background-image: url("../media/fintrack_logo.png");
-  background-repeat: no-repeat;
-  width: 150px;
-  height: 50px;
-}
-
 .side_nav {
   display: flex;
   flex-direction: column;
