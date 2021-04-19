@@ -18,7 +18,6 @@ exports.applyValidationRules = (endpoint) => {
         }
         case "/profile/email": {
             return [
-                check('username').isLength({min: 5}).withMessage("Invalid username"),
                 check('email').isEmail().withMessage("Invalid Email"),
             ];
         }

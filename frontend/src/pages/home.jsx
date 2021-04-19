@@ -98,7 +98,7 @@ export default function HomePage(props) {
         <div className={classes.title}>Welcome to Quizlab</div>
         <div className={classes.introSection}>
           <div className={classes.header2}>
-             Quizlab is lorem ipsum
+             Quizlab is a fast and easy way for students & teachers to create, take, and evaluate assessments!
           </div>
           <div className={classes.header3}>
             {" "}

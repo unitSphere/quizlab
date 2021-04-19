@@ -39,7 +39,7 @@ class App extends Component {
           this.setState({
             isauth: response.data.isauth,
             user: response.data.username,
-              userType: response.data.type
+            userType: response.data.type
           });
         }
       })
