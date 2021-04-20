@@ -1,5 +1,6 @@
 import axios from "axios";
 let host = "http://localhost:5000/api";
+
 export let getClasses = async () => {
     try {
         const resp = await axios.get("/api/class/all");
@@ -42,8 +43,6 @@ export let getAllStudents = async () => {
     }
 };
 
-
-
 export let addClass = async (newClass) => {
     try {
         const resp = await axios({
@@ -51,7 +50,7 @@ export let addClass = async (newClass) => {
             url: '/api/class/add',
             data: {
                 name: newClass.name,
-                teacher_id: newClass.teacher_id,
+                teacher_email: newClass.teacher_email,
                 student_ids: newClass.student_ids
             }
         });
@@ -88,6 +87,60 @@ export let getProblemsByAssignmentId = async (assignment_id) => {
     return result;
 }
 
+export let getQuizzesByTeacherEmail = async (teacher_email) => {
+    try {
+        const resp = await axios({
+            method: 'get',
+            url: '/api/teacher/quizzes',
+            params: {
+                email: teacher_email,
+            }
+        });
+        console.log(resp.data);
+        return resp.data;
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+        return err;
+    }
+}
+
+export let addQuiz = async (newQuiz) => {
+    try {
+        const resp = await axios({
+            method: 'post',
+            url: '/api/teacher/addquiz',
+            data: {
+                name: newQuiz.name,
+                teacher_email: newQuiz.teacher_email,
+                class_ids: newQuiz.class_ids
+            }
+        });
+        return resp.data;
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+        return err;
+    }
+};
+
+export let getClassesByTeacherEmail = async (teacher_email) => {
+    try {
+        const resp = await axios({
+            method: 'get',
+            url: '/api/teacher/classes',
+            params: {
+                email: teacher_email,
+            }
+        });
+        console.log(resp.data);
+        return resp.data;
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+        return err;
+    }
+}
 
 export let submitResponse = async (submission_id, assignment_id, answers) => {
     // TODO: update submission with assignment_id
@@ -109,24 +162,3 @@ export let submitResponse = async (submission_id, assignment_id, answers) => {
     }
 
 };
-
-// exports.user_signin = async (username, password) => {
-//     return await executeQuery(db, async (db) => await db.collection(users_collection).findOne(
-//         {username: username, password: password}));
-// };
-
-// exports.find_teacher_by_id = async (id) => {
-//     const _id = ObjectId(id);
-//     return await executeQuery(db, async (db) => await db.collection(users_collection).findOne(
-//         {_id: _id}));
-// };
-//
-// // exports.find_user_by_username = async (username) => {
-// //     return await executeQuery(db, async (db) => await db.collection(users_collection).findOne(
-// //         {username: username}));
-// // };
-//
-// exports.find_teacher_by_email = async (email) => {
-//     return await executeQuery(db, async (db) => await db.collection(users_collection).findOne(
-//         {email: email}));
-// };

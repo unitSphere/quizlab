@@ -7,9 +7,6 @@ import Button from "@material-ui/core/Button";
 import AddClassDialog from "../components/classes/addClassDialog";
 import QuizTable from "../components/studentMain/quizTable";
 
-
-
-
 export default function StudentMainPage(props) {
 
     return (

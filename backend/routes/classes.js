@@ -22,10 +22,12 @@ router.post(
         console.log("path /api/class/add/");
         let newClass = {
             name: req.body.name,
-            teacher_id: req.body.teacher_id,
+            teacher_email: req.body.teacher_email,
             student_ids: req.body.student_ids,
         };
+
         const exists_in_classes_db = await find_class_by_name(newClass.name);
+
         if (exists_in_classes_db) {
             return res
                 .status(409)

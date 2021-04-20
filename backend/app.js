@@ -4,7 +4,6 @@ let users = require('./routes/users.js');
 let students = require('./routes/students.js');
 let teachers = require('./routes/teachers.js');
 let classes = require('./routes/classes.js');
-let quizzes = require('./routes/quizzes.js');
 let problems = require('./routes/problems.js');
 let submissions = require('./routes/submissions.js');
 
@@ -24,7 +23,6 @@ app.use('/api/user', users);
 app.use('/api/student', students);
 app.use('/api/teacher', teachers);
 app.use('/api/class', classes);
-// app.use('/api/quiz', quizzes);
 app.use('/api/problem', problems);
 app.use('/api/submission', submissions);
 

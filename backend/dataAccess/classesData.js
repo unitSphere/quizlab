@@ -5,7 +5,7 @@ let ObjectId = require('mongodb').ObjectID;
 
 exports.add_class = async (newClass) => {
     return await executeQuery(db, async (db) => await db.collection(collection).insertOne(
-        {name: newClass.name, teacher_id: newClass.teacher_id, student_ids: newClass.student_ids}));
+        {name: newClass.name, teacher_email: newClass.teacher_email, student_ids: newClass.student_ids}));
 };
 
 exports.get_classes = async () => {

@@ -13,7 +13,7 @@ export default function ClassesPage(props) {
 
     return (
         <div>
-            <ClassesTable newClass/>
+            <ClassesTable user={props.user} newClass/>
         </div>
     );
 }

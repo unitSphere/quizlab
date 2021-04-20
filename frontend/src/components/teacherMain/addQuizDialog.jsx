@@ -14,7 +14,7 @@ import TableBody from "@material-ui/core/TableBody";
 import { DataGrid } from '@material-ui/data-grid';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
-import {addClass, getAllStudents, getStudentsByIds} from "../../api/data";
+import {getClassesByTeacherEmail, addQuiz} from "../../api/data";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 
@@ -69,10 +69,10 @@ const DialogActions = withStyles((theme) => ({
 export default function AddClassDialog(props) {
     const [open, setOpen] = React.useState(false);
     const [selections, setSelections] = React.useState([]);
-    const [className, setClassName] = React.useState();
+    const [quizName, setQuizName] = React.useState();
     const [rows, setRows] = React.useState([]);
     const [loaded, setLoaded] = React.useState(false);
-    const {classId, name, onAdd, teacherEmail} = props;
+    const {quizId, name, onAdd, teacherEmail} = props;
     // const classes = styles();
     const handleClickOpen = () => {
         setOpen(true);
@@ -83,26 +83,28 @@ export default function AddClassDialog(props) {
         setOpen(false);
     };
 
-    function createData(id, name, email) {
-        return { id, name, email};
+    // Data for each class the teacher oversees
+    function createData(id, name, nums) {
+        return { id, name, nums };
     }
 
     const handleAdd = () => {
-        let newClass = {
-            name: className,
+        let newQuiz = {
+            name: quizName,
             teacher_email: teacherEmail,
-            student_ids: selections.selectionModel
+            class_ids: selections.selectionModel
         };
-        addClass(newClass).then(resp => {
+
+        addQuiz(newQuiz).then(resp => {
+            console.log("Add quiz? ", resp)
             onAdd();
         });
 
         handleClose();
-
     };
 
     const handleChange = (event) => {
-        setClassName(event.target.value);
+        setQuizName(event.target.value);
     };
 
 
@@ -112,31 +114,31 @@ export default function AddClassDialog(props) {
 
     React.useEffect( () => {
         if(loaded){
-            getAllStudents().then(items => {
-                items.forEach((item, index, items) => {items[index] = createData(item._id, item.fullName,item.email);});
+            getClassesByTeacherEmail(teacherEmail).then(items => {
+                items.forEach((item, index, items) => {items[index] = createData(item._id, item.name, items.length);});
                 setRows(items);
                 setLoaded(true);
             });
         }
-    }, [loaded]);
+    }, [teacherEmail, loaded]);
 
     const columns = [{ field: 'name', headerName: 'Name', width: 130 },
-        { field: 'email', headerName: 'Email', width: 130 }];
+        { field: 'nums', headerName: 'No. Students', width: 130 }];
     const classes = use();
 
     return (
-         <div style={{display: "flex",
+        <div style={{display: "flex",
             flexDirection: "row"}}>
 
 
             <Button variant="outlined" color="primary" onClick={handleClickOpen} style={{marginLeft: "auto"}}>
-                Add Class
+                Add Quiz
             </Button>
 
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                     <form className={classes.root} noValidate autoComplete="off">
-                        <TextField id="classNameInput" label="Input Class Name" variant="outlined" onChange={handleChange}
+                        <TextField id="classNameInput" label="Input Quiz Name" variant="outlined" onChange={handleChange}
                         />
                     </form>
                 </DialogTitle>
@@ -145,7 +147,7 @@ export default function AddClassDialog(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleAdd} color="primary">
-                        Create Class
+                        Create Quiz
                     </Button>
                 </DialogActions>
             </Dialog>

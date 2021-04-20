@@ -68,7 +68,7 @@ export default function QuizTable() {
             </div>
 
             <div className={classes.flexboxContainer} style={{display: loadSubmissions ? 'none' : 'flex' }}>
-                <div className={classes.title}>Quizzes</div>
+                <div className={classes.title}>Student Homepage</div>
 
             </div>
             <TableContainer component={Paper} style={{display: loadSubmissions ? 'none' : 'flex' }}>

@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function ClassesTable() {
+export default function ClassesTable(props) {
     const classes = useStyles();
     const [loadClasses, setLoadClasses] = React.useState(true);
     const [rows, setRows] = React.useState([]);
@@ -73,7 +73,7 @@ export default function ClassesTable() {
         <div className={classes.flexboxContainer} style={{display: loadClasses ? 'none' : 'flex' }}>
                 <div className={classes.title}>Classes</div>
                 <div style={{marginLeft: "auto"}}>
-                    <AddClassDialog onAdd={addNewClass}/>
+                    <AddClassDialog onAdd={addNewClass} teacherEmail={props.user}/>
                 </div>
             </div>
             <TableContainer component={Paper} style={{display: loadClasses ? 'none' : 'flex' }}>

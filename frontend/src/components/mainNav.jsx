@@ -140,7 +140,6 @@ class NavigationBar extends Component {
   handleProfile() {
     window.location.href = "/profile";
   }
-
   render() {
     //let logo = <div className="signin_button"></div>;
     //let status = this.props.isauth ? "Logged in" : "Not logged in";

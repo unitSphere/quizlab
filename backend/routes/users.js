@@ -78,7 +78,7 @@ router.post(
         let student = await find_student_by_email(username);
         let teacher = await find_teacher_by_email(username);
 
-        console.log(student, teacher);
+        // console.log(student, teacher);
 
         if (!student && !teacher) {
             return res.status(409).json({error: "User with this username does not exist"});
