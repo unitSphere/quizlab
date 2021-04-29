@@ -72,6 +72,7 @@ export default function AddClassDialog(props) {
     const [selections, setSelections] = React.useState([]);
     const [quizName, setQuizName] = React.useState();
     const [quizType, setQuizType] = React.useState('');
+    const [numQuestions, setNumQuestions] = React.useState(5)
     const [rows, setRows] = React.useState([]);
     const [loaded, setLoaded] = React.useState(false);
     const {quizId, name, onAdd, teacherEmail} = props;
@@ -113,6 +114,10 @@ export default function AddClassDialog(props) {
         setQuizType(event.target.value)
     }
 
+    const handleNumQuestionsChange = (event) => {
+        setNumQuestions(event.target.value)
+    }
+
     const handleSelection = (selections2) => {
         setSelections(selections2);
     };
@@ -149,6 +154,7 @@ export default function AddClassDialog(props) {
                 </DialogTitle>
                 <DialogContent dividers style={{ height: 400, width: 500}}>
                     <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection onSelectionModelChange={handleSelection}/>
+                    Choose the quiz topic:
                     <Select
                         value={quizType}
                         onChange={handleQuizTypeChange}
@@ -157,7 +163,16 @@ export default function AddClassDialog(props) {
                             <em>None</em>
                         </MenuItem>
                         <MenuItem value={"stats"}>Statistics</MenuItem>
-                        <MenuItem value={"random"}>Random Class</MenuItem>
+                        <MenuItem value={"random"}>Geography</MenuItem>
+                    </Select>
+                    Choose the number of questions:
+                    <Select
+                        value={numQuestions}
+                        onChange={handleNumQuestionsChange}
+                    >
+                        <MenuItem value={5}>5</MenuItem>
+                        <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={15}>15</MenuItem>
                     </Select>
                 </DialogContent>
                 <DialogActions>
