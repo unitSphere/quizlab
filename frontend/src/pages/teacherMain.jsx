@@ -89,7 +89,7 @@ export default function TeacherMainPage(props) {
                                     Statistics
                                 </TableCell>
                                 <TableCell align="right">
-                                    60/100
+                                   <b>60</b> /100
                                 </TableCell>
                             </TableRow>
                         ))}

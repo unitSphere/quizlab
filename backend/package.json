@@ -1,21 +1,17 @@
 {
-  "name": "project-fintrack",
+  "name": "project-quizlab",
   "version": "1.0.0",
   "description": "**Team Members** :",
-  "main": "./fintrack/backend/app.js",
+  "main": "./quizlab/backend/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/UTSCC09/project-fintrack.git"
+    "type": "git"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/UTSCC09/project-fintrack/issues"
-  },
   "dependencies": {
     "alphavantage": "^2.0.1",
     "axios": "^0.19.2",
@@ -36,6 +32,5 @@
     "nodemailer": "^6.4.6",
     "nodemon": "^2.0.2",
     "path": "^0.12.7"
-  },
-  "homepage": "https://github.com/UTSCC09/project-fintrack#readme"
+  }
 }

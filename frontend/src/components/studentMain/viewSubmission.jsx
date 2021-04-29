@@ -106,7 +106,7 @@ export default function ViewSubmission(props) {
             </Button>
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Class: {props.name}
+                    Class: Statistics{props.name}
                 </DialogTitle>
                 <DialogContent dividers>
                     <FormControl component="fieldset">

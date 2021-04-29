@@ -80,9 +80,11 @@ export let getProblemsByAssignmentId = async (assignment_id) => {
         return {problem_id, description, choices}
     };
     let result = [
-        createProblemData(1, "Lorem ipsum 12j jsdh jhf sj asdlf aksjh ff", {"A":"SDF DFS SA D ASDF",  "B":"SDF R K WEK JWE", "C": "I RSIUBD SJD AUHD SKDFJ", "D": "I IU  OS H U DAS" }),
-        createProblemData(2, "KDSs  ksnd fkdfs ipsum 12j jsdh jhf sj asdlf aksjh ff", {"A":"L;LPE  OFJSID ID",  "B":"URIUT IUW IUE", "C": "POPODPOFS S D", "D": "OWIEPI WPI PWIE" }),
-        createProblemData(3, "Kdk Jh n DF kk fs jhf sj asdlf aksjh ff", {"A":"OIOW EOR",  "B":"NKWNJK HS DH", "C": "WN NJSHD F", "D": "VCBJWG IWDF" })
+        createProblemData(1, "1. A researcher is curious about the IQ of students at the Utrecht University. The entire group\n" +
+            "students is an example of a:", {"A":"Parameter",  "B":"Statistic", "C": "Population", "D": "Sample" }),
+        createProblemData(2, "Five-point Likert scales (strongly disagree, disagree, neutral, agree, strongly agree) are\n" +
+            "frequently used to measure motivations and attitudes. A Likert scale is a: ", {"A":"Discrete Variable",  "B":"Ordinal Variable", "C": "Categorical Variable", "D": "All of the above options (A, B and C) " }),
+        createProblemData(3, "Which of the following sets of scores has the greatest variability (range)?", {"A":"2, 5, 8, 11",  "B":"13, 13, 13, 13", "C": "20, 25, 26 ,27", "D": "42, 43, 44, 45" })
 ];
     return result;
 }

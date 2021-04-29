@@ -16,7 +16,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import {getClassesByTeacherEmail, addQuiz} from "../../api/data";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
-
+import {Select} from "@material-ui/core";
+import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = (theme) => ({
     root: {
@@ -70,6 +71,7 @@ export default function AddClassDialog(props) {
     const [open, setOpen] = React.useState(false);
     const [selections, setSelections] = React.useState([]);
     const [quizName, setQuizName] = React.useState();
+    const [quizType, setQuizType] = React.useState('');
     const [rows, setRows] = React.useState([]);
     const [loaded, setLoaded] = React.useState(false);
     const {quizId, name, onAdd, teacherEmail} = props;
@@ -107,6 +109,9 @@ export default function AddClassDialog(props) {
         setQuizName(event.target.value);
     };
 
+    const handleQuizTypeChange = (event) => {
+        setQuizType(event.target.value)
+    }
 
     const handleSelection = (selections2) => {
         setSelections(selections2);
@@ -115,7 +120,7 @@ export default function AddClassDialog(props) {
     React.useEffect( () => {
         if(loaded){
             getClassesByTeacherEmail(teacherEmail).then(items => {
-                items.forEach((item, index, items) => {items[index] = createData(item._id, item.name, items.length);});
+                items.forEach((item, index, items) => {items[index] = createData(item._id, item.name);});
                 setRows(items);
                 setLoaded(true);
             });
@@ -123,7 +128,7 @@ export default function AddClassDialog(props) {
     }, [teacherEmail, loaded]);
 
     const columns = [{ field: 'name', headerName: 'Name', width: 130 },
-        { field: 'nums', headerName: 'No. Students', width: 130 }];
+        { field: 'subject', headerName: 'Subject', width: 130 }];
     const classes = use();
 
     return (
@@ -144,6 +149,16 @@ export default function AddClassDialog(props) {
                 </DialogTitle>
                 <DialogContent dividers style={{ height: 400, width: 500}}>
                     <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection onSelectionModelChange={handleSelection}/>
+                    <Select
+                        value={quizType}
+                        onChange={handleQuizTypeChange}
+                    >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={"stats"}>Statistics</MenuItem>
+                        <MenuItem value={"random"}>Random Class</MenuItem>
+                    </Select>
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleAdd} color="primary">
