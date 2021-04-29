@@ -107,6 +107,24 @@ export let getQuizzesByTeacherEmail = async (teacher_email) => {
     }
 }
 
+export let genAssignment = async (newAssignment) => {
+    try {
+        const resp = await axios({
+            method: 'post',
+            url: '/api/assignments/create',
+            data: {
+                type: newAssignment.quizType,
+                numQuestions: newAssignment.class_ids
+            }
+        });
+        return resp.data;
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+        return err;
+    }
+};
+
 export let addQuiz = async (newQuiz) => {
     try {
         const resp = await axios({
