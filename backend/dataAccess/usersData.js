@@ -15,6 +15,11 @@ exports.get_students = async () => {
     return await executeQuery(db, async (db) => await db.collection(students_collection).find({}).toArray());
 };
 
+
+exports.get_student_id_by_email = async (student_email) => {
+    return await executeQuery(db, async (db) => await db.collection(students_collection).aggregate([{ $match: { email: student_email } }, { $project : { _id : 1 } }]).toArray());
+};
+
 exports.find_student_by_email = async (email) => {
     return await executeQuery(db, async (db) => await db.collection(students_collection).findOne(
         {email: email}));

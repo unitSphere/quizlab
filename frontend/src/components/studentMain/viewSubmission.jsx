@@ -61,18 +61,17 @@ const DialogActions = withStyles((theme) => ({
 
 export default function ViewSubmission(props) {
     const [open, setOpen] = React.useState(false);
-    let {answers, assignment_id, student_id} = props;
+    let {clicked, assignment_id, student_id, submission_id} = props;
     const [rows, setRows] = React.useState([]);
     const [loaded, setLoaded] = React.useState(false);
-    assignment_id = 1;
 
     const [values, setValues] = React.useState({});
+
 
     const handleChange = (event) => {
         let newValues = values;
         newValues[event.target.name] = event.target.value;
         setValues(newValues);
-        console.log(newValues);
     };
 
     const handleClickOpen = () => {
@@ -82,11 +81,8 @@ export default function ViewSubmission(props) {
 
     React.useEffect( () => {
         if(loaded){
-            console.log(loaded);
-            console.log(getProblemsByAssignmentId(assignment_id));
             getProblemsByAssignmentId(assignment_id).then(items => {
                 setRows(items);
-                console.log(answers);
                 setLoaded(false);
             });
         }
@@ -97,7 +93,9 @@ export default function ViewSubmission(props) {
 
     const handleSubmit = () => {
         handleClose();
-        submitResponse(student_id, assignment_id, values).then(r => console.log("Updated submission"));
+        alert("Reload th page for updates");
+
+        submitResponse(submission_id, assignment_id, values).then(r => console.log("Updated submission"));
     }
     return (
         <div>
@@ -106,14 +104,14 @@ export default function ViewSubmission(props) {
             </Button>
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Class: Statistics{props.name}
+                    Class: {props.quiz_name}
                 </DialogTitle>
                 <DialogContent dividers>
                     <FormControl component="fieldset">
                     {rows.map((row, index) => (
                         <>
                             <FormLabel component="legend">{row.description}</FormLabel>
-                            <RadioGroup aria-label="gender" name={row.problem_id} value={values[row.problem_id]} onChange={handleChange}>
+                            <RadioGroup aria-label="gender" name={row._id} value={values[row._id]} onChange={handleChange}>
                                 {Object.keys(row.choices).map(key => (
                                     <FormControlLabel value={key} control={<Radio/>} label={row.choices[key]} />
                                 ))

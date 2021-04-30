@@ -8,6 +8,9 @@ const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
+
+
+
 //basic QA checkup
 router.get("/", async function(req, res) {
     console.log("path /api/problem/");
@@ -34,14 +37,6 @@ router.post(
         }else {
             res.status(500).json({error: "Internal server error"});
         }
-    }
-);
-
-router.get(
-    "/all", async function (req, res) {
-        console.log("path /api/classes/all/");
-        const result = await get_classes();
-        res.status(200).json(result);
     }
 );
 

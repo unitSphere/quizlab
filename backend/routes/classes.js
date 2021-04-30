@@ -8,6 +8,12 @@ const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
+
+const isTeacher = function(req, res, next) {
+    if (!(req.session.type == "teacher")) return res.status(401).end("access denied");
+    next();
+};
+
 //basic QA checkup
 router.get("/", async function(req, res) {
     console.log("path /api/class/");
@@ -17,7 +23,7 @@ router.get("/", async function(req, res) {
 
 
 router.post(
-    "/add", async function (req, res){
+    "/add", isTeacher, async function (req, res){
 
         console.log("path /api/class/add/");
         let newClass = {
@@ -46,7 +52,7 @@ router.post(
 );
 
 router.get(
-    "/all", async function (req, res) {
+    "/all", isTeacher, async function (req, res) {
         console.log("path /api/classes/all/");
         const result = await get_classes();
         res.status(200).json(result);

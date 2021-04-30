@@ -8,6 +8,13 @@ const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
+
+const isTeacher = function(req, res, next) {
+    if (!(req.session.type == "teacher")) return res.status(401).end("access denied");
+    next();
+};
+
+
 //basic QA checkup
 router.get("/", async function(req, res) {
     console.log("path /api/teacher/");
@@ -16,7 +23,7 @@ router.get("/", async function(req, res) {
 });
 
 router.get(
-    "/quizzes", async function (req, res) {
+    "/quizzes", isTeacher, async function (req, res) {
         console.log("path /api/teacher/quizzes/");
         let teacher_email = req.query.email;
         const result = await find_teacher_quizzes(teacher_email);
@@ -25,7 +32,7 @@ router.get(
 );
 
 router.get(
-    "/classes", async function (req, res) {
+    "/classes", isTeacher, async function (req, res) {
         console.log("path /api/teacher/classes/");
         let teacher_email = req.query.email;
         const result = await find_teacher_classes(teacher_email);
@@ -34,7 +41,7 @@ router.get(
 );
 
 router.post(
-    "/addquiz", async function (req, res){
+    "/addquiz", isTeacher, async function (req, res){
         console.log("path /api/teacher/addquiz/");
         let newQuiz = {
             name: req.body.name,

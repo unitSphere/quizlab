@@ -25,7 +25,7 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {isauth: false, user: null};
+        this.state = {isauth: false, user: null, user_id: null};
     }
 
     checkAuth() {
@@ -40,7 +40,8 @@ class App extends Component {
                     this.setState({
                         isauth: response.data.isauth,
                         user: response.data.username,
-                        userType: response.data.type
+                        userType: response.data.type,
+                        user_id: response.data.user_id
                     });
                 }
             })
@@ -102,7 +103,7 @@ class App extends Component {
                         <AboutPage isauth={this.state.isauth} user={this.state.user} userType={this.state.userType}/>
                     </Route>
                     <Route path="/student">
-                        <StudentMainPage isauth={this.state.isauth} user={this.state.user}
+                        <StudentMainPage isauth={this.state.isauth} user={this.state.user} user_id = {this.state.user_id}
                                          userType={this.state.userType}/>
                     </Route>
                     <Route path="/teacher">

@@ -108,7 +108,7 @@ export default function ViewDialog(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleClose} color="primary">
-                        Save changes
+                        Exit
                     </Button>
                 </DialogActions>
             </Dialog>

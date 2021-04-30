@@ -6,6 +6,8 @@ let teachers = require('./routes/teachers.js');
 let classes = require('./routes/classes.js');
 let problems = require('./routes/problems.js');
 let submissions = require('./routes/submissions.js');
+let quizzes = require('./routes/quizzes.js');
+let assignments = require('./routes/assignments.js');
 
 const PORT = process.env.PORT || 5000;
 const session = require('express-session');
@@ -24,7 +26,10 @@ app.use('/api/student', students);
 app.use('/api/teacher', teachers);
 app.use('/api/class', classes);
 app.use('/api/problem', problems);
+app.use('/api/quiz', quizzes);
 app.use('/api/submission', submissions);
+app.use('/api/assignment', assignments);
+
 
 
 // to catch any other path and return 404

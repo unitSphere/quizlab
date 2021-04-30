@@ -50,6 +50,7 @@ router.post(
         if (result) {
             userType === "student" ? req.session.type = "student" : req.session.type = "teacher";
             req.session.username = email;
+            req.session.user_id = result.ops[0]._id;
             res.setHeader(
                 "Set-Cookie",
                 cookie.serialize("username", email, {
@@ -97,6 +98,7 @@ router.post(
                 })
             );
             req.session.type = "student";
+            req.session.user_id = student._id;
         }
         else if (teacher) {
             if (teacher.password !== password)
@@ -112,11 +114,12 @@ router.post(
                 })
             );
             req.session.type = "teacher";
-
+            req.session.user_id = teacher._id;
         }
 
         //session
         req.session.username = username;
+
         return res.json({success: "user " + username + " signed in"});
     }
 );
@@ -138,7 +141,7 @@ router.post("/logout", function (req, res) {
 // Check if user is authenticated
 router.get("/isauthenticated", function (req, res) {
     if (req.session.username)
-        return res.json({isauth: true, username: req.session.username, type: req.session.type});
+        return res.json({isauth: true, username: req.session.username, type: req.session.type, user_id: req.session.user_id});
     return res.json({isauth: false, username: null});
 });
 

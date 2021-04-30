@@ -46,19 +46,20 @@ const useStyles = makeStyles({
 });
 
 
-export default function QuizTable() {
+export default function QuizTable(props) {
     const classes = useStyles();
     const [loadSubmissions, setLoadSubmissions] = React.useState(true);
     const [rows, setRows] = React.useState([]);
-    const student_id = 1;
-    React.useEffect( () => {
+    const {user_id} = props;
+
+    React.useEffect(  () => {
         if (loadSubmissions) {
             // Query database and load new
-            getSubmissionsByStudentId(student_id).then(rows => {
+            let a = async () => {await getSubmissionsByStudentId(user_id).then(rows => {
                 setRows(rows);
                 setLoadSubmissions(false);
-            });
-
+            });};
+            a();
         }
     },    [loadSubmissions]);
 
@@ -88,7 +89,7 @@ export default function QuizTable() {
                                 </TableCell>
                                 <TableCell align="right">{row.submitted ? row.score : "NA"}</TableCell>
                                 <TableCell align="right">
-                                    <ViewSubmission assignment_id={row.assignment_id}  student_id={row.student_id} answers={row.answers}/>
+                                    <ViewSubmission assignment_id={row.assignment_id} quiz_name={row.quiz_name} submission_id={row._id} student_id={row.student_id} answers={row.answers}/>
                                 </TableCell>
                             </TableRow>
                         ))}
