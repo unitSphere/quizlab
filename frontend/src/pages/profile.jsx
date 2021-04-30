@@ -16,6 +16,12 @@ const useStyles = makeStyles(theme => ({
 export default function ProfilePage(props) {
     const classes = useStyles();
     return (
-        <div className={classes.title}>Profile</div>
+        <div>
+            <div className={classes.title}>Profile</div>
+            <div>
+                <h1>Your email is {props.user}</h1>
+                <h4>Account type: {props.userType}</h4>
+            </div>
+        </div>
     );
 }
