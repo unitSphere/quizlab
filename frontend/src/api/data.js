@@ -1,5 +1,8 @@
 import axios from "axios";
+
 let host = "http://localhost:5000/api";
+
+/* All helper functions for querying the database */
 
 export let getClasses = async () => {
     try {
@@ -130,7 +133,7 @@ export let getSubmissionById = async (submission_id) => {
 export let getStudentIdByEmail = async (student_email) => {
     try {
         const resp = await axios.get("/api/student/id?student_email=" + student_email);
-        if(resp.data._id){
+        if (resp.data._id) {
             return resp.data._id;
         }
     } catch (err) {

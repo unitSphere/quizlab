@@ -1,11 +1,12 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 
-const UserContext = createContext([{}, () => {}]);
+const UserContext = createContext([{}, () => {
+}]);
 const UserConsumer = UserContext.Consumer;
 const useUser = () => React.useContext(UserContext);
 
 const UserProvider = props => {
-    const [state, setState] = useState({ loading: true });
+    const [state, setState] = useState({loading: true});
     console.log('UserState:', state);
     useEffect(() => {
         fetch('/api/user/isauthenticated')
@@ -26,4 +27,4 @@ const UserProvider = props => {
     );
 };
 
-export { useUser, UserContext, UserConsumer, UserProvider };
+export {useUser, UserContext, UserConsumer, UserProvider};

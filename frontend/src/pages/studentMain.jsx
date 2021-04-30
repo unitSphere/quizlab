@@ -1,6 +1,6 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import {makeStyles} from "@material-ui/core/styles";
+import {Link} from "react-router-dom";
 import "../style/home.css";
 import ClassesTable from "../components/classes/classesTable";
 import Button from "@material-ui/core/Button";

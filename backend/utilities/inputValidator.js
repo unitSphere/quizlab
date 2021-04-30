@@ -1,5 +1,6 @@
 const { check, validationResult } = require('express-validator');
 
+// Input validation
 exports.applyValidationRules = (endpoint) => {
     console.log("endpoint: ", endpoint);
     switch (endpoint) {

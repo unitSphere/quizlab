@@ -15,9 +15,8 @@ exports.get_students = async () => {
     return await executeQuery(db, async (db) => await db.collection(students_collection).find({}).toArray());
 };
 
-
 exports.get_student_id_by_email = async (student_email) => {
-    return await executeQuery(db, async (db) => await db.collection(students_collection).aggregate([{ $match: { email: student_email } }, { $project : { _id : 1 } }]).toArray());
+    return await executeQuery(db, async (db) => await db.collection(students_collection).aggregate([{$match: {email: student_email}}, {$project: {_id: 1}}]).toArray());
 };
 
 exports.find_student_by_email = async (email) => {
@@ -28,7 +27,7 @@ exports.find_student_by_email = async (email) => {
 exports.get_students_by_ids = async (student_ids) => {
     student_ids.forEach((id, index, student_ids) => student_ids[index] = ObjectId(id));
     console.log(student_ids);
-    return await executeQuery(db, async (db) => await db.collection(students_collection).find({"_id" : {"$in" : student_ids}}).toArray())
+    return await executeQuery(db, async (db) => await db.collection(students_collection).find({"_id": {"$in": student_ids}}).toArray())
 }
 
 exports.add_teacher = async (name, email, password) => {

@@ -1,15 +1,20 @@
-
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const {find_student_by_email, get_students, add_student, get_students_by_ids, get_student_id_by_email} = require("../dataAccess/usersData");
+const {
+    find_student_by_email,
+    get_students,
+    add_student,
+    get_students_by_ids,
+    get_student_id_by_email
+} = require("../dataAccess/usersData");
 
 const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
 
 //basic QA checkup
-router.get("/", async function(req, res) {
+router.get("/", async function (req, res) {
     console.log("path /api/student/");
 
     res.status(200).send("/api/student/ in users controller");
@@ -23,15 +28,14 @@ router.get(
     }
 );
 
-
 router.get(
     "/id", async function (req, res) {
         console.log("path /api/students/id");
         const student_email = req.query.student_email;
         const result = await get_student_id_by_email(student_email);
-        if(result){
+        if (result) {
             res.status(200).json(result[0]);
-        }else{
+        } else {
             res.status(500).json({error: "Student with that email not found"});
         }
     }

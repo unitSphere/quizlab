@@ -1,26 +1,20 @@
-
 const express = require("express");
 const bodyParser = require("body-parser");
-
 const {find_class_by_name, add_problem, get_classes} = require("../dataAccess/problemsData");
-
 const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
 
-
-
-
 //basic QA checkup
-router.get("/", async function(req, res) {
+router.get("/", async function (req, res) {
     console.log("path /api/problem/");
 
     res.status(200).send("/api/problem/ in problem controller");
 });
 
-
+// Add problem to problem bank
 router.post(
-    "/add", async function (req, res){
+    "/add", async function (req, res) {
 
         console.log("path /api/problem/add/");
         let problem = {
@@ -32,9 +26,9 @@ router.post(
 
         const result = await add_problem(problem);
         console.log(result.ops[0]._id);
-        if(result) {
+        if (result) {
             res.status(200).json({message: "Added problem"});
-        }else {
+        } else {
             res.status(500).json({error: "Internal server error"});
         }
     }

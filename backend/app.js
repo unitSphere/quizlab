@@ -30,8 +30,6 @@ app.use('/api/quiz', quizzes);
 app.use('/api/submission', submissions);
 app.use('/api/assignment', assignments);
 
-
-
 // to catch any other path and return 404
 app.use(function (req, res) {
     let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;

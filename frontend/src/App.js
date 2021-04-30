@@ -103,7 +103,7 @@ class App extends Component {
                         <AboutPage isauth={this.state.isauth} user={this.state.user} userType={this.state.userType}/>
                     </Route>
                     <Route path="/student">
-                        <StudentMainPage isauth={this.state.isauth} user={this.state.user} user_id = {this.state.user_id}
+                        <StudentMainPage isauth={this.state.isauth} user={this.state.user} user_id={this.state.user_id}
                                          userType={this.state.userType}/>
                     </Route>
                     <Route path="/teacher">

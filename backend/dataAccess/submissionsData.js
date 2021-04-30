@@ -5,7 +5,15 @@ let ObjectId = require('mongodb').ObjectID;
 
 exports.add_submission = async (submission) => {
     return await executeQuery(db, async (db) => await db.collection(collection).insertOne(
-        {student_id: submission.student_id, assignment_id: submission.assignment_id, quiz_name: submission.quiz_name, score: -1, answers: [], submitted: false, created_at: new Date()}));
+        {
+            student_id: submission.student_id,
+            assignment_id: submission.assignment_id,
+            quiz_name: submission.quiz_name,
+            score: -1,
+            answers: [],
+            submitted: false,
+            created_at: new Date()
+        }));
 };
 
 exports.update_submission = async (submission_id, fields) => {

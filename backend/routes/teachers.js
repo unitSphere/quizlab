@@ -1,22 +1,26 @@
-
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const {add_quiz, find_teacher_by_email, add_teacher, find_teacher_quizzes, find_teacher_classes} = require("../dataAccess/usersData");
+const {
+    add_quiz,
+    find_teacher_by_email,
+    add_teacher,
+    find_teacher_quizzes,
+    find_teacher_classes
+} = require("../dataAccess/usersData");
 
 const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
 
 
-const isTeacher = function(req, res, next) {
+const isTeacher = function (req, res, next) {
     if (!(req.session.type == "teacher")) return res.status(401).end("access denied");
     next();
 };
 
-
 //basic QA checkup
-router.get("/", async function(req, res) {
+router.get("/", async function (req, res) {
     console.log("path /api/teacher/");
 
     res.status(200).send("/api/teacher/ in users controller");
@@ -41,7 +45,7 @@ router.get(
 );
 
 router.post(
-    "/addquiz", isTeacher, async function (req, res){
+    "/addquiz", isTeacher, async function (req, res) {
         console.log("path /api/teacher/addquiz/");
         let newQuiz = {
             name: req.body.name,
@@ -52,9 +56,9 @@ router.post(
         const result = await add_quiz(newQuiz);
 
         console.log(result.ops[0]._id);
-        if(result) {
+        if (result) {
             res.status(200).json({message: "Added quiz"});
-        }else {
+        } else {
             res.status(500).json({error: "Internal server error"});
         }
 

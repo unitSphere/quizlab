@@ -1,6 +1,11 @@
 # Quizlab
 
-### Run App (Frontend and Backend Saparately -> Better for development)
+### Access the project live @ http://64.225.36.241
+##### Feel free to test it by creating a teacher account and student accounts and logging in with them
+##### As well as creating a class for them to be assigned in and generating a quiz and assigning the quiz
+##### And finally, taking the quiz and viewing the results/progress
+
+### Run App (Frontend and Backend Separately -> Better for development)
 
 0. Install dependencies by `npm install` (Both in /backend and /frontend directories)
 1. `node app.js` keep this running (execute in /backend)
