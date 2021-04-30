@@ -14,7 +14,7 @@ import TableBody from "@material-ui/core/TableBody";
 import { DataGrid } from '@material-ui/data-grid';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
-import {getClassesByTeacherEmail, addQuiz} from "../../api/data";
+import {getClassesByTeacherEmail, addQuiz, genAssignment} from "../../api/data";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import {Select} from "@material-ui/core";
 import MenuItem from '@material-ui/core/MenuItem';
@@ -92,16 +92,26 @@ export default function AddClassDialog(props) {
     }
 
     const handleAdd = () => {
-        let newQuiz = {
-            name: quizName,
-            teacher_email: teacherEmail,
-            class_ids: selections.selectionModel
-        };
+        let newAssignment = {
+            type: quizType,
+            numQuestions: numQuestions
+        }
 
-        addQuiz(newQuiz).then(resp => {
-            console.log("Add quiz? ", resp)
-            onAdd();
-        });
+        genAssignment(newAssignment).then(resp => {
+            console.log("Respond w/ assignment ID: ", resp)
+        })
+
+        /* Comment this part out for now */
+        // let newQuiz = {
+        //     name: quizName,
+        //     teacher_email: teacherEmail,
+        //     class_ids: selections.selectionModel
+        // };
+        //
+        // addQuiz(newQuiz).then(resp => {
+        //     console.log("Add quiz? ", resp)
+        //     onAdd();
+        // });
 
         handleClose();
     };
