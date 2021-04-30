@@ -12,6 +12,17 @@ export let getClasses = async () => {
     }
 };
 
+export let getClassById = async (class_id) => {
+    try {
+        const resp = await axios.get("/api/class/id?id=" + class_id);
+        return resp.data;
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+        return err;
+    }
+}
+
 export let getStudentsByIds = async (student_ids) => {
     try {
 
@@ -71,6 +82,51 @@ export let getSubmissionsByStudentId = async (student_id) => {
     }
 }
 
+export let teacherMainQuery = async (teacher_email) => {
+    try {
+        const resp = await axios.get("/api/assignment/teacher?email=" + teacher_email);
+        resp.forEach()
+        return resp.data;
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+        return err;
+    }
+}
+
+export let getAssignmentsByTeacherEmail = async (teacher_email) => {
+    try {
+        const resp = await axios.get("/api/assignment/teacher?email=" + teacher_email);
+        return resp.data;
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+        return err;
+    }
+}
+
+export let getSubmissionByAssignmentId = async (assignment_id) => {
+    try {
+        const resp = await axios.get("/api/submission/assignment?id=" + assignment_id);
+        return resp.data;
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+        return err;
+    }
+}
+
+export let getSubmissionById = async (submission_id) => {
+    try {
+        const resp = await axios.get("/api/submission/byid?id=" + submission_id);
+        return resp.data;
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+        return err;
+    }
+}
+
 export let getStudentIdByEmail = async (student_email) => {
     try {
         const resp = await axios.get("/api/student/id?student_email=" + student_email);
@@ -85,16 +141,6 @@ export let getStudentIdByEmail = async (student_email) => {
 }
 
 export let getProblemsByAssignmentId = async (assignment_id) => {
-//     let createProblemData = (problem_id, description, choices) => {
-// //         return {problem_id, description, choices}
-// //     };
-// //     let result = [
-// //         createProblemData(1, "1. A researcher is curious about the IQ of students at the Utrecht University. The entire group\n" +
-// //             "students is an example of a:", {"A":"Parameter",  "B":"Statistic", "C": "Population", "D": "Sample" }),
-// //         createProblemData(2, "Five-point Likert scales (strongly disagree, disagree, neutral, agree, strongly agree) are\n" +
-// //             "frequently used to measure motivations and attitudes. A Likert scale is a: ", {"A":"Discrete Variable",  "B":"Ordinal Variable", "C": "Categorical Variable", "D": "All of the above options (A, B and C) " }),
-// //         createProblemData(3, "Which of the following sets of scores has the greatest variability (range)?", {"A":"2, 5, 8, 11",  "B":"13, 13, 13, 13", "C": "20, 25, 26 ,27", "D": "42, 43, 44, 45" })
-// // ];
     try {
         const resp = await axios.get("/api/assignment/problems?assignment_id=" + assignment_id);
         return resp.data;
@@ -122,14 +168,35 @@ export let getQuizzesByTeacherEmail = async (teacher_email) => {
     }
 }
 
+export let genQuiz = async (newQuiz) => {
+    try {
+        const resp = await axios({
+            method: 'post',
+            url: '/api/quiz/generate',
+            data: {
+                topic: newQuiz.topic,
+                numQuestions: newQuiz.num_questions,
+                teacher_email: newQuiz.teacher_email,
+                quiz_name: newQuiz.quiz_name
+            }
+        });
+        return resp.data;
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+        return err;
+    }
+};
+
 export let genAssignment = async (newAssignment) => {
     try {
         const resp = await axios({
             method: 'post',
-            url: '/api/assignments/create',
+            url: '/api/assignment/add',
             data: {
-                type: newAssignment.quizType,
-                numQuestions: newAssignment.class_ids
+                teacher_email: newAssignment.teacher_email,
+                quiz_name: newAssignment.quiz_name,
+                class_id: newAssignment.class_id
             }
         });
         return resp.data;

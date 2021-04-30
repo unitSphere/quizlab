@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const {get_problems_by_topic} = require("../dataAccess/problemsData");
-const {add_assignment,get_problems_by_assignment_id} = require("../dataAccess/assignmentsData");
+const {add_assignment,get_problems_by_assignment_id, get_assignments_by_teacher_email} = require("../dataAccess/assignmentsData");
 const {find_class_by_id} = require("../dataAccess/classesData");
 const {add_submission} = require("../dataAccess/submissionsData");
 
@@ -27,17 +27,26 @@ router.get("/", async function(req, res) {
 router.get("/problems", async function(req, res) {
     console.log("path /api/assignment/problems");
     let assignment_id = req.query.assignment_id;
+    console.log(assignment_id);
     const problems = await get_problems_by_assignment_id(assignment_id);
     return res.status(200).json(problems);
+});
+
+router.get("/teacher", async function(req, res) {
+    console.log("path /api/assignment/teacher");
+    let teacher_email = req.query.email;
+    console.log(teacher_email);
+    const assignments = await get_assignments_by_teacher_email(teacher_email);
+    return res.status(200).json(assignments);
 });
 
 
 router.post(
     "/add", isTeacher, async function (req, res){
         console.log("path /api/assignment/add/");
-        const quiz_name = req.query.quiz_name;
-        const teacher_email = req.query.teacher_email;
-        const class_id = req.query.class_id;
+        const quiz_name = req.body.quiz_name;
+        const teacher_email = req.body.teacher_email;
+        const class_id = req.body.class_id;
         const result = await add_assignment(quiz_name, teacher_email, class_id);
         console.log(result.ops[0]._id);
         if(result) {

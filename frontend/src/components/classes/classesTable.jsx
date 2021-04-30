@@ -81,17 +81,17 @@ export default function ClassesTable(props) {
                     <TableHead>
                         <TableRow>
                             <TableCell>Class Name</TableCell>
-                            <TableCell align="right"># of students</TableCell>
+                            <TableCell align="right"># of Students</TableCell>
                             <TableCell align="right">Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.map((row) => (
                             <TableRow key={row.name}>
-                                <TableCell component="th" scope="row">
+                                <TableCell key={row.name} component="th" scope="row">
                                     {row.name}
                                 </TableCell>
-                                <TableCell align="right">{row.student_ids.length}</TableCell>
+                                <TableCell  align="right">{row.student_ids.length}</TableCell>
                                 <TableCell align="right">
                                     <ViewDialog classId={row.classId} student_ids={row.student_ids} name={row.name}/>
                                 </TableCell>

@@ -19,3 +19,15 @@ exports.get_submissions_by_student_id = async (student_id) => {
         {student_id: student_id}).toArray());
 };
 
+exports.get_submission_by_submission_id = async (submission_id) => {
+    const _id = ObjectId(submission_id)
+    return await executeQuery(db, async (db) => await db.collection(collection).find(
+        {_id: _id}).toArray());
+};
+
+exports.get_submission_by_assignment_id = async (assignment_id) => {
+    const _id = ObjectId(assignment_id)
+    return await executeQuery(db, async (db) => await db.collection(collection).find(
+        {assignment_id: _id}).toArray());
+};
+

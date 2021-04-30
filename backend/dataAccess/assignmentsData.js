@@ -23,6 +23,11 @@ exports.get_assignment_by_id = async (assignment_id) => {
     return assignment
 };
 
+exports.get_assignments_by_teacher_email = async (teacher_email) => {
+    let assignments = await executeQuery(db, async (db) => await db.collection(collection).find({teacher_email: teacher_email}).toArray());
+    return assignments
+};
+
 exports.get_problems_by_assignment_id = async (assignment_id) => {
     const _id = ObjectId(assignment_id);
     let assignment = await executeQuery(db, async (db) => await db.collection(collection).findOne({_id: _id}));

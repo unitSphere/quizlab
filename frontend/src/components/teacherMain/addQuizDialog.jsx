@@ -14,7 +14,7 @@ import TableBody from "@material-ui/core/TableBody";
 import { DataGrid } from '@material-ui/data-grid';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
-import {getClassesByTeacherEmail, addQuiz, genAssignment} from "../../api/data";
+import {getClassesByTeacherEmail, addQuiz, genAssignment, genQuiz} from "../../api/data";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import {Select} from "@material-ui/core";
 import MenuItem from '@material-ui/core/MenuItem';
@@ -91,14 +91,20 @@ export default function AddClassDialog(props) {
         return { id, name, nums };
     }
 
+
     const handleAdd = () => {
-        let newAssignment = {
-            type: quizType,
-            numQuestions: numQuestions
+        let newQuiz = {
+            topic: quizType,
+            num_questions: numQuestions,
+            teacher_email: teacherEmail,
+            quiz_name: quizName
         }
 
-        genAssignment(newAssignment).then(resp => {
-            console.log("Respond w/ assignment ID: ", resp)
+        genQuiz(newQuiz).then(resp => {
+            if(resp.message === "Added quiz") {
+                console.log(quizType)
+                onAdd()
+            }
         })
 
         /* Comment this part out for now */
@@ -128,22 +134,7 @@ export default function AddClassDialog(props) {
         setNumQuestions(event.target.value)
     }
 
-    const handleSelection = (selections2) => {
-        setSelections(selections2);
-    };
 
-    React.useEffect( () => {
-        if(loaded){
-            getClassesByTeacherEmail(teacherEmail).then(items => {
-                items.forEach((item, index, items) => {items[index] = createData(item._id, item.name);});
-                setRows(items);
-                setLoaded(true);
-            });
-        }
-    }, [teacherEmail, loaded]);
-
-    const columns = [{ field: 'name', headerName: 'Name', width: 130 },
-        { field: 'subject', headerName: 'Subject', width: 130 }];
     const classes = use();
 
     return (
@@ -163,8 +154,7 @@ export default function AddClassDialog(props) {
                     </form>
                 </DialogTitle>
                 <DialogContent dividers style={{ height: 400, width: 500}}>
-                    <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection onSelectionModelChange={handleSelection}/>
-                    Choose the quiz topic:
+                    Topic:
                     <Select
                         value={quizType}
                         onChange={handleQuizTypeChange}
@@ -172,10 +162,10 @@ export default function AddClassDialog(props) {
                         <MenuItem value="">
                             <em>None</em>
                         </MenuItem>
-                        <MenuItem value={"stats"}>Statistics</MenuItem>
-                        <MenuItem value={"random"}>Geography</MenuItem>
+                        <MenuItem value={"Statistics"}>Statistics</MenuItem>
+                        <MenuItem value={"Geography"}>Geography</MenuItem>
                     </Select>
-                    Choose the number of questions:
+                    # of Questions:
                     <Select
                         value={numQuestions}
                         onChange={handleNumQuestionsChange}

@@ -1,5 +1,5 @@
 const {get_answers_by_assignment_id} =  require("../dataAccess/assignmentsData");
-const {update_submission, get_submissions_by_student_id} = require("../dataAccess/submissionsData");
+const {update_submission, get_submissions_by_student_id, get_submission_by_submission_id, get_submission_by_assignment_id} = require("../dataAccess/submissionsData");
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -15,6 +15,20 @@ router.get("/", async function(req, res) {
     console.log("path /api/submission/");
     let student_id = req.query.student_id;
     const submissions = await get_submissions_by_student_id(student_id);
+    return res.status(200).json(submissions);
+});
+
+router.get("/byid", async function(req, res) {
+    console.log("path /api/assignment/problems");
+    let submission_id = req.query.id;
+    const submission = await get_submission_by_submission_id(submission_id);
+    return res.status(200).json(submission);
+});
+
+router.get("/assignment", async function(req, res) {
+    console.log("path /api/submission/assignment");
+    let assignment_id = req.query.id;
+    const submissions = await get_submission_by_assignment_id(assignment_id);
     return res.status(200).json(submissions);
 });
 

@@ -26,16 +26,17 @@ router.post(
     "/generate", isTeacher, async function (req, res){
 
         console.log("path /api/quiz/generate/");
-        const numQuestions = parseInt(req.query.numQuestions);
-        const problem_ids = await get_problems_by_topic(req.query.topic, numQuestions);
+        const numQuestions = parseInt(req.body.numQuestions);
+        const problem_ids = await get_problems_by_topic(req.body.topic, numQuestions);
         const random_index = rand(0, problem_ids.length - numQuestions);
         const selected_problems = problem_ids.slice(random_index, random_index + numQuestions);
         let selected_ids = [];
         selected_problems.forEach(item => selected_ids.push(item._id));
-        const result = await add_quiz(req.query.quiz_name, req.query.teacher_email, req.query.topic, selected_ids);
-        console.log(result.ops[0]._id);
+        const result = await add_quiz(req.body.quiz_name, req.body.teacher_email, req.body.topic, selected_ids);
+        // console.log(result.ops[0]._id);
+
         if(result) {
-            res.status(200).json({message: "Added quiz", quiz_name: req.query.quiz_name});
+            res.status(200).json({message: "Added quiz", quiz_name: req.body.quiz_name});
         }else {
             res.status(500).json({error: "Internal server error"});
         }

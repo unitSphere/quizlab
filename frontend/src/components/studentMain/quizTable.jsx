@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -52,27 +52,30 @@ export default function QuizTable(props) {
     const [rows, setRows] = React.useState([]);
     const {user_id} = props;
 
-    React.useEffect(  () => {
+    React.useEffect(() => {
         if (loadSubmissions) {
-            // Query database and load new
-            let a = async () => {await getSubmissionsByStudentId(user_id).then(rows => {
+            getSubmissionsByStudentId(user_id).then(rows => {
+                console.log(rows)
                 setRows(rows);
                 setLoadSubmissions(false);
-            });};
-            a();
+            })
         }
-    },    [loadSubmissions]);
+    }, [loadSubmissions]);
+
+    const firstSubmit = () => {
+        setLoadSubmissions(true)
+    }
 
     return (<div>
-            <div className={classes.loading} style={{display: loadSubmissions ? 'flex' : 'none' }}>
-                <CircularProgress />
+            <div className={classes.loading} style={{display: loadSubmissions ? 'flex' : 'none'}}>
+                <CircularProgress/>
             </div>
 
-            <div className={classes.flexboxContainer} style={{display: loadSubmissions ? 'none' : 'flex' }}>
-                <div className={classes.title}>Student Homepage</div>
+            <div className={classes.flexboxContainer} style={{display: loadSubmissions ? 'none' : 'flex'}}>
+                <div className={classes.title}>Student Homepage: View/Take Your Assigned Quizzes</div>
 
             </div>
-            <TableContainer component={Paper} style={{display: loadSubmissions ? 'none' : 'flex' }}>
+            <TableContainer component={Paper} style={{display: loadSubmissions ? 'none' : 'flex'}}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -89,7 +92,9 @@ export default function QuizTable(props) {
                                 </TableCell>
                                 <TableCell align="right">{row.submitted ? row.score : "NA"}</TableCell>
                                 <TableCell align="right">
-                                    <ViewSubmission assignment_id={row.assignment_id} quiz_name={row.quiz_name} submission_id={row._id} student_id={row.student_id} answers={row.answers}/>
+                                    <ViewSubmission assignment_id={row.assignment_id} quiz_name={row.quiz_name}
+                                                    submission_id={row._id} student_id={row.student_id}
+                                                    answers={row.answers} alreadySubmitted={row.submitted} onSubmit={firstSubmit}/>
                                 </TableCell>
                             </TableRow>
                         ))}

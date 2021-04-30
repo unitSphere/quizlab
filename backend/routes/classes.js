@@ -2,7 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const {find_class_by_name, add_class, get_classes} = require("../dataAccess/classesData");
+const {find_class_by_name, add_class, get_classes, find_class_by_id} = require("../dataAccess/classesData");
 
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -21,6 +21,12 @@ router.get("/", async function(req, res) {
     res.status(200).send("/api/class/ in users controller");
 });
 
+router.get("/id", async function(req, res) {
+    console.log("path /api/class/id");
+    let class_id = req.query.id;
+    const className = await find_class_by_id(class_id);
+    return res.status(200).json(className);
+});
 
 router.post(
     "/add", isTeacher, async function (req, res){

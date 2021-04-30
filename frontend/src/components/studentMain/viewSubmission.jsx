@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -11,7 +11,13 @@ import Typography from '@material-ui/core/Typography';
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import {getProblemsByAssignmentId, getStudentsByIds, submitResponse} from "../../api/data";
+import {
+    getProblemsByAssignmentId,
+    getStudentsByIds,
+    getSubmissionById,
+    getSubmissionsByStudentId,
+    submitResponse
+} from "../../api/data";
 import Table from "@material-ui/core/Table";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -33,13 +39,13 @@ const styles = (theme) => ({
 });
 
 const DialogTitle = withStyles(styles)((props) => {
-    const { children, classes, onClose, ...other } = props;
+    const {children, classes, onClose, ...other} = props;
     return (
         <MuiDialogTitle disableTypography className={classes.root} {...other}>
             <Typography variant="h6">{children}</Typography>
             {onClose ? (
                 <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-                    <CloseIcon />
+                    <CloseIcon/>
                 </IconButton>
             ) : null}
         </MuiDialogTitle>
@@ -61,12 +67,11 @@ const DialogActions = withStyles((theme) => ({
 
 export default function ViewSubmission(props) {
     const [open, setOpen] = React.useState(false);
-    let {clicked, assignment_id, student_id, submission_id} = props;
+    let {clicked, assignment_id, student_id, submission_id, alreadySubmitted, onSubmit} = props;
     const [rows, setRows] = React.useState([]);
     const [loaded, setLoaded] = React.useState(false);
 
     const [values, setValues] = React.useState({});
-
 
     const handleChange = (event) => {
         let newValues = values;
@@ -79,24 +84,36 @@ export default function ViewSubmission(props) {
         setLoaded(true);
     };
 
-    React.useEffect( () => {
-        if(loaded){
+    React.useEffect(() => {
+        if (loaded) {
             getProblemsByAssignmentId(assignment_id).then(items => {
+                console.log(items)
                 setRows(items);
                 setLoaded(false);
             });
+
+            if (alreadySubmitted) {
+                getSubmissionById(submission_id).then(items => {
+                    setValues(items[0].answers)
+                })
+            }
         }
-    },[loaded]);
+    }, [loaded]);
+
     const handleClose = () => {
         setOpen(false);
     };
 
     const handleSubmit = () => {
         handleClose();
-        alert("Reload th page for updates");
+        submitResponse(submission_id, assignment_id, values).then(r => {
+                console.log("Updated submission")
+                onSubmit()
+            }
+        );
 
-        submitResponse(submission_id, assignment_id, values).then(r => console.log("Updated submission"));
     }
+
     return (
         <div>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -104,27 +121,29 @@ export default function ViewSubmission(props) {
             </Button>
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Class: {props.quiz_name}
+                    {props.quiz_name}
                 </DialogTitle>
                 <DialogContent dividers>
                     <FormControl component="fieldset">
-                    {rows.map((row, index) => (
-                        <>
-                            <FormLabel component="legend">{row.description}</FormLabel>
-                            <RadioGroup aria-label="gender" name={row._id} value={values[row._id]} onChange={handleChange}>
-                                {Object.keys(row.choices).map(key => (
-                                    <FormControlLabel value={key} control={<Radio/>} label={row.choices[key]} />
-                                ))
-                                }
-                            </RadioGroup>
-                        </>
-                    ))}
-                </FormControl>
+                        {rows.map((row, index) => (
+                            <div key={index}>
+                                <FormLabel component="legend">{row.description}</FormLabel>
+                                <RadioGroup aria-label="gender" name={row._id} value={values[row._id]}
+                                            onChange={handleChange}>
+                                    {Object.keys(row.choices).map(key => (
+                                        <FormControlLabel key={key} value={key} control={<Radio/>}
+                                                          label={row.choices[key]}/>
+                                    ))
+                                    }
+                                </RadioGroup>
+                            </div>
+                        ))}
+                    </FormControl>
 
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleSubmit} color="primary">
-                        Submit
+                    <Button autoFocus onClick={handleSubmit} color="primary" disabled={alreadySubmitted}>
+                        {alreadySubmitted ? "Submitted" : "Submit"}
                     </Button>
                 </DialogActions>
             </Dialog>

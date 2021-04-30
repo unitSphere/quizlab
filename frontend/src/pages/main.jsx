@@ -16,6 +16,6 @@ const useStyles = makeStyles(theme => ({
 export default function MainPage(props) {
     const classes = useStyles();
     return (
-        <div className={classes.title}>Welcome to Quizlab: Main</div>
+        <div className={classes.title}>Welcome to Quizlab!</div>
     );
 }
